@@ -1,7 +1,10 @@
+
 import os
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from dataset_loader import load_dataset
+
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
