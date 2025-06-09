@@ -40,11 +40,44 @@ async def dataset(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text("❗️ لطفاً نام اپلیکیشن مورد نظر را بنویسید.\nمثال:\n/search Instagram")
+        return
+
+    query = " ".join(context.args).lower()
+    df = load_dataset()
+
+    result = df[df['App'].str.lower() == query]
+
+    if result.empty:
+        await update.message.reply_text("❌ اپلیکیشنی با این نام پیدا نشد.")
+    else:
+        app_info = result.iloc[0]
+        name = app_info['App']
+        category = app_info['Category']
+        rating = app_info['Rating']
+        installs = app_info['Installs'] if 'Installs' in app_info else 'نامشخص'
+        await update.message.reply_text(
+            f"🔍 نتیجه جستجو:\n"
+            f"📱 نام: {name}\n"
+            f"🏷 دسته: {category}\n"
+            f"⭐️ امتیاز: {rating}\n"
+            f"⬇️ نصب‌ها: {installs}"
+        )
+
+
+
+
+
+
+
 app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("help", help_command))
 app.add_handler(CommandHandler("about", about_command))
 app.add_handler(CommandHandler("dataset", dataset))
+app.add_handler(CommandHandler("search", search))
 
 print("🚀 Bot is running...")
 app.run_polling()
