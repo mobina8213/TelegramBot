@@ -24,10 +24,18 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "مثال:\n/search Instagram"
     )
 
+async def about_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print("دستور /about دریافت شد ✅")
+    await update.message.reply_text(
+        "این بات برای آنالیز اطلاعات اپلیکیشن‌های گوگل پلی ساخته شده است. 🎉"
+    )
+
+
 
 app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("help", help_command))
+app.add_handler(CommandHandler("about", about_command))
 
 print("🚀 Bot is running...")
 app.run_polling()
