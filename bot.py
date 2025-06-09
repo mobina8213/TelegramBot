@@ -32,10 +32,19 @@ async def about_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+async def dataset(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    df = load_dataset()
+    sample = df[['App', 'Category', 'Rating']].head(3).to_string(index=False)
+    await update.message.reply_text(f"📊 نمونه‌ای از دیتاست:\n\n{sample}")
+
+
+
+
 app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("help", help_command))
 app.add_handler(CommandHandler("about", about_command))
+app.add_handler(CommandHandler("dataset", dataset))
 
 print("🚀 Bot is running...")
 app.run_polling()
