@@ -8,7 +8,9 @@ TOKEN = os.getenv("TOKEN")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print("دستور /start دریافت شد ✅")
-    await update.message.reply_text("سلام! خوش آمدید به ربات ما.")
+    await update.message.reply_text(
+"سلام! خوش آمدید به ربات ما."
+"برای دیدن راهنمای دستورات، لطفاً از دستور /help استفاده کنید. 📋")
 
 app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
